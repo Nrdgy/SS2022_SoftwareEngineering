@@ -1,0 +1,53 @@
+﻿<Window x:Class="SoSe22_SE_SmartHome.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SoSe22_SE_SmartHome"
+        mc:Ignorable="d"
+        Closing="OnWindowClosing"
+        Title="Smart-Home Hub" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="btnNewAutomation" Content="{x:Static local:Resources.de_newAutomation}" Click="OnAddAutomationButtonPressed" HorizontalAlignment="Left" Margin="30,279,0,0" VerticalAlignment="Top" Height="96" Width="168"/>
+        <Button x:Name="btnNewSensor" Content="{x:Static local:Resources.de_newSensor}" Click="OnAddSensorButtonPressed" HorizontalAlignment="Left" Margin="30,60,0,0" VerticalAlignment="Top" Height="96" Width="168"/>
+        <ListView Name="sensorList" Margin="300,17,30,235" ItemsSource="{Binding SensorListBinding}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding Type}"/>
+                    <GridViewColumn Header="Aktueller Messwert" DisplayMemberBinding="{Binding SensorData}"/>
+                    <GridViewColumn Header="Optionen">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Bearbeiten" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Click="OnSensorListItemEdit"/>
+                                    <Button Content="Löschen" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Click="OnSensorListItemDelete"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Name="automationsList" ItemsSource="{Binding AutomationListBinding}" Margin="300,239,31,20">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Typ" DisplayMemberBinding="{Binding AutomationType}"/>
+                    <GridViewColumn Header="Grenzwert" Width="Auto" DisplayMemberBinding="{Binding Threshold}"/>
+                    <GridViewColumn Header="Sensoren" Width="Auto" DisplayMemberBinding="{Binding SensorsCommaSeparated}"/>
+                    <GridViewColumn Header="Optionen" Width="Auto" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Bearbeiten" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Click="OnAutomationListItemEdit"/>
+                                    <Button Content="Löschen" Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Click="OnAutomationListItemDelete"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>
